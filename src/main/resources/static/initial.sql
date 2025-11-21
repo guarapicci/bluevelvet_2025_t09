@@ -1,3 +1,25 @@
+-- USUÁRIOS: criar schema para credenciais de login de
+-- administradores, gerentes, clientes, etc.
+
+create table `db`.`users`(
+	username VARCHAR(50) not null primary key,
+	password VARCHAR(500) not null,
+	enabled boolean not null
+);
+
+create table `db`.`authorities` (
+	username VARCHAR(50) not null,
+	authority VARCHAR(50) not null,
+	constraint fk_authorities_users foreign key(username) references users(username)
+);
+create unique index ix_auth_username on authorities (username,authority);
+
+INSERT INTO db.users
+(username, password, enabled)
+VALUES('felipechoi', '{bcrypt}$2a$10$Ha3IM.uQ8tTTqTZ8KDFgn.XBMF5uWjjwG1Gh7Xdsj6kwORZrwMuCa
+', 1);
+
+-- PRODUTOS: criar schema para álbuns, músicas, autores, etc.
 CREATE TABLE `db`.`product` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(30) NULL,
