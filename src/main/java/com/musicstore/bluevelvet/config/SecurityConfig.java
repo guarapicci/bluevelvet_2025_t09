@@ -74,12 +74,14 @@ public class SecurityConfig {
             throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username as users,password,enabled "
+                .usersByUsernameQuery("select name as user,password,enabled "
                         + "from db.users "
-                        + "where username = ?")
-                .authoritiesByUsernameQuery("select username as user,authority "
-                        + "from db.authorities "
-                        + "where username = ?");
+                        + "where name = ?")
+                .authoritiesByUsernameQuery("select users.name as user, authorities.authority as authority "
+                        + "from db.authorities as authorities "
+                        + "inner join db.users as users "
+                        + "on users.id = authorities.ref_user "
+                        + "where users.name like ?    ");
     }
 
 
