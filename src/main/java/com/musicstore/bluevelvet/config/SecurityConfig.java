@@ -81,7 +81,7 @@ public class SecurityConfig {
                         + "from db.authorities as authorities "
                         + "inner join db.users as users "
                         + "on users.id = authorities.ref_user "
-                        + "where users.name like ?    ");
+                        + "where users.name like ?");
     }
 
 
