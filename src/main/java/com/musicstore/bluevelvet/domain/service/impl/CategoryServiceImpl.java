@@ -18,8 +18,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
+    //HACK: este valor mágico deveria ser um parâmetro em um arquivo de configuração
+    // ou adquirido de um serviço de domínios
+    // (para permitir redirecionamento em tempo real e CDN)
     private String getBasePictureUrl(){
-        return "http://localhost:32791/pics";
+        return "http://localhost:32791/pics/";
     }
 
     private final CategoryRepository repository;
@@ -33,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
         response.setName(existing.getName());
         response.setId(existing.getId());
         response.setParentId(existing.getParent_id());
-        response.setPictureUrl(getBasePictureUrl() + existing.getPicture_uuid());
+        response.setPictureUrl(getBasePictureUrl() + existing.getPicture_uuid() + ".webp");
         return response;
     }
 

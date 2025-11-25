@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(schema="db", name="categories")
+@Table(schema="db", name="category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,9 +20,9 @@ public class Category {
     private String name;
 
     @Column(nullable = true)
-    private long parent_id;
+    private Long parent_id;
 
     @Column(nullable = true)
-    private UUID picture_uuid;
+    private String picture_uuid;
 
 }
