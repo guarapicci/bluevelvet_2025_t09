@@ -13,4 +13,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     @Query("SELECT p.categories FROM Product p WHERE p.id = :product_id ORDER BY id")
     Page<Category> findByProductId(Long product_id, Pageable pageable);
 
+    Page<Category> findByNameLike(String name, Pageable pageable);
+
+    Page<Category> findByParentId(Long parent_id, Pageable pageable);
 }

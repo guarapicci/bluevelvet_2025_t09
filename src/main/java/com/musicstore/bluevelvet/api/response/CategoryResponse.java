@@ -18,4 +18,6 @@ public class CategoryResponse {
 
     private String pictureUrl;
 
+    private Boolean enabled;
+
 }

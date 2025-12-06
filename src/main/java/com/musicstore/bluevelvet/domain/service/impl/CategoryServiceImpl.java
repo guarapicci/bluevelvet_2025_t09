@@ -36,10 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryResponse response = new CategoryResponse();
         response.setName(entity.getName());
         response.setId(entity.getId());
-        response.setParentId(entity.getParent_id());
+        response.setParentId(entity.getParentId());
         if(entity.getPicture_uuid() != null) {
             response.setPictureUrl(getBasePictureUrl() + entity.getPicture_uuid() + ".webp");
         }
+        response.setEnabled(entity.getEnabled());
         return response;
     }
 
@@ -49,7 +50,8 @@ public class CategoryServiceImpl implements CategoryService {
         if(request.getId() != null)
             category.setId (request.getId());
         category.setName(request.getName());
-        category.setParent_id(request.getParentId());
+        category.setParentId(request.getParentId());
+        category.setEnabled(request.getEnabled());
         return category;
     }
     
@@ -62,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryResponse response = new CategoryResponse();
         response.setName(existing.getName());
         response.setId(existing.getId());
-        response.setParentId(existing.getParent_id());
+        response.setParentId(existing.getParentId());
         if(existing.getPicture_uuid() != null) {
             response.setPictureUrl(getBasePictureUrl() + existing.getPicture_uuid() + ".webp");
         }
@@ -75,6 +77,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
+    public Page<CategoryResponse> findByName(String name,Pageable pageable){
+        return repository.findByNameLike("%" + name + "%", pageable).map(this::responseFromEntity);
+    }
+
     public void deleteById(Long id){
         Optional<Category> fetched = repository.findById(id);
         if (fetched.isEmpty())
@@ -84,6 +90,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     public CategoryResponse createCategory(CategoryRequest request) {
         Category category = entityFromRequest(request);
+        if(request.getEnabled() == null){
+            request.setEnabled(true);
+        }
         category = repository.save(category);
         return responseFromEntity(category);
     }
@@ -97,7 +106,7 @@ public class CategoryServiceImpl implements CategoryService {
             throw new InvalidDataOperationException("Campo \"name\" obrigatório.");
         }
         existing.setName(request.getName());
-        existing.setParent_id(request.getParentId());
+        existing.setParentId(request.getParentId());
         existing = repository.save(existing);
         CategoryResponse response = responseFromEntity(existing);
         return response;
@@ -133,6 +142,9 @@ public class CategoryServiceImpl implements CategoryService {
         return repository.findByProductId(id, pageable).map(this::responseFromEntity);
     }
 
+    public Page<CategoryResponse> findByParentId(Long id, Pageable pageable){
+        return repository.findByParentId(id, pageable).map(this::responseFromEntity);
+    }
 
 
 }
