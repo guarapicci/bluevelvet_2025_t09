@@ -25,4 +25,6 @@ public interface CategoryService {
 
     Page<CategoryResponse> findByProductId(Long id, Pageable pageable);
 
+    Page<CategoryResponse> findByName(String name, Pageable pageable);
+
 }

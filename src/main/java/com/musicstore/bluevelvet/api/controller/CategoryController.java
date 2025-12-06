@@ -39,10 +39,13 @@ public class CategoryController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all categories", description = "Get all product categories from the Blue Velvet Music Store")
-    public ResponseEntity<Page<CategoryResponse>> getAllCategories(Pageable pageable) {
+    @Operation(summary = "Get all categories, with optional name filter", description = "Get all product categories from the Blue Velvet Music Store")
+    public ResponseEntity<Page<CategoryResponse>> getAllCategories(@RequestParam(required=false) String name, Pageable pageable) {
         log.info("Request received to fetch all categories.");
 
+        if (name != null){
+            return ResponseEntity.ok(service.findByName(name,pageable));
+        }
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
