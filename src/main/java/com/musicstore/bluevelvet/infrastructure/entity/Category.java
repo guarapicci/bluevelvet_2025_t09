@@ -3,9 +3,7 @@ package com.musicstore.bluevelvet.infrastructure.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(schema="db", name="category")
@@ -22,7 +20,7 @@ public class Category {
     private String name;
 
     @Column(nullable = true)
-    private Long parent_id;
+    private Long parentId;
 
     @Column(nullable = true)
     private String picture_uuid;

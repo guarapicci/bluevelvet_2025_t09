@@ -14,4 +14,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     Page<Category> findByProductId(Long product_id, Pageable pageable);
 
     Page<Category> findByNameLike(String name, Pageable pageable);
+
+    Page<Category> findByParentId(Long parent_id, Pageable pageable);
 }

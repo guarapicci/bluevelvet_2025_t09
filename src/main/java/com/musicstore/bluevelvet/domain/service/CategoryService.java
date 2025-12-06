@@ -27,4 +27,6 @@ public interface CategoryService {
 
     Page<CategoryResponse> findByName(String name, Pageable pageable);
 
+    Page<CategoryResponse> findByParentId(Long id, Pageable pageable);
+
 }

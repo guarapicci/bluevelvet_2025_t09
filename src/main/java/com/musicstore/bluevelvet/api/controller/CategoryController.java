@@ -40,7 +40,7 @@ public class CategoryController {
 
     @GetMapping
     @Operation(summary = "Get all categories, with optional name filter", description = "Get all product categories from the Blue Velvet Music Store")
-    public ResponseEntity<Page<CategoryResponse>> getAllCategories(@RequestParam(required=false) String name, Pageable pageable) {
+    public ResponseEntity<Page<CategoryResponse>> getProductsOfCategory(@RequestParam(required=false) String name, Pageable pageable) {
         log.info("Request received to fetch all categories.");
 
         if (name != null){
@@ -51,10 +51,19 @@ public class CategoryController {
 
     @GetMapping("/products_of_category/{id}/")
     @Operation(summary = "Get all Products of a category", description = "Get all products that belong in a category with a given ID.")
-    public ResponseEntity<Page<ProductResponse>> getAllCategories(@PathVariable Long id, Pageable pageable) {
+    public ResponseEntity<Page<ProductResponse>> getProductsOfCategory(@PathVariable Long id, Pageable pageable) {
         log.info("Request received to fetch all products of category ID {}.", id);
 
         return ResponseEntity.ok(productService.findByCategoryId(id, pageable));
+    }
+
+
+    @GetMapping("/child_categories_of/{id}/")
+    @Operation(summary = "Get all child categories of another category", description = "Get all categories whose parent category has a given ID.")
+    public ResponseEntity<Page<CategoryResponse>> getChildrenOfCategory(@PathVariable Long id, Pageable pageable) {
+        log.info("Request received to fetch all children of category ID {}.", id);
+
+        return ResponseEntity.ok(service.findByParentId(id, pageable));
     }
 
     @DeleteMapping("/{id}")
