@@ -35,7 +35,6 @@ public class ThymeleafController {
         return "dashboard";
     }
 
-
     // ==== PRODUCTS ====
     @GetMapping("/product/{id}")
     public String getProductView(@PathVariable("id") Long id, Model model) {
@@ -90,7 +89,6 @@ public class ThymeleafController {
 
         return "redirect:/categories";
     }
-
 
 
 
